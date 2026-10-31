@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#251c27">
+    <meta name="description" content="Una pequeña experiencia creada con mucho cariño.">
+
+    <title>Sorpresa 🌷</title>
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="./style/style.css">
+
+    <!-- Three.js mediante CDN -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+        }
+    }
+    </script>
+
+    <!-- Configuración de carga -->
+    <link rel="preload" as="image" href="./img/foto1.webp">
+</head>
+
+<body>
+
+    <!-- ==================================
+         ESCENARIO 3D PRINCIPAL
+    =================================== -->
+
+    <main id="experience">
+
+        <div id="garden-container">
+            <!-- Three.js insertará aquí el canvas 3D -->
+        </div>
+
+        <!-- Capa de oscurecimiento para mejorar
+             la legibilidad de los textos -->
+        <div class="scene-overlay"></div>
+
+        <!-- Viñeta cinematográfica -->
+        <div class="scene-vignette"></div>
+
+
+        <!-- ==================================
+             PANTALLA DE CARGA
+        =================================== -->
+
+        <section id="loading-screen" class="loading-screen">
+
+            <div class="loading-content">
+
+                <div class="loading-flower">✿</div>
+
+                <h1>Preparando algo especial...</h1>
+
+                <p>
+                    Estamos preparando un pequeño jardín para ti.
+                </p>
+
+                <div class="progress-container">
+                    <div id="loading-progress"></div>
+                </div>
+
+                <span id="loading-percentage">0%</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================
+             PANTALLA DE BIENVENIDA
+        =================================== -->
+
+        <section id="welcome-screen" class="welcome-screen hidden">
+
+            <div class="welcome-content">
+
+                <p class="welcome-subtitle">
+                    Un jardin hecho con mucho amol
+                </p>
+
+                <button id="start-button" class="glass-button">
+
+                    <span>Comenzar</span>
+
+                    <span class="button-arrow">✧</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================
+             PRESENTACIÓN DE MENSAJES
+        =================================== -->
+
+        <section id="message-screen" class="message-screen hidden">
+
+            <div id="message-content" class="message-content">
+
+                <div class="message-text-container">
+
+                    <p id="message-text" class="message-text">
+                    </p>
+
+                </div>
+
+                <div class="photo-container">
+
+                    <img
+                        id="message-photo"
+                        class="message-photo"
+                        src=""
+                        alt="Un recuerdo especial"
+                        draggable="false"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================
+             ESCENA FINAL
+        =================================== -->
+
+        <section id="final-screen" class="final-screen hidden">
+
+            <div class="final-content">
+
+                <p class="final-decoration">✧ ✿ ✧</p>
+
+                <h1 id="final-title">
+                    Feliz Cumpleaños Emy
+                </h1>
+
+                <p class="final-subtitle">
+                    Que este día esté lleno de comida rica, regalitos y mucho alcohol.
+                </p>
+
+                <div class="final-photo-container">
+
+                    <img
+                        id="final-photo"
+                        class="final-photo"
+                        src="./img/foto-final.webp"
+                        alt="Un recuerdo especial"
+                        draggable="false"
+                    >
+
+                </div>
+
+                <div class="final-petals" aria-hidden="true"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================
+             CONTROLES DE AUDIO
+        =================================== -->
+
+        <div id="audio-controls" class="audio-controls hidden">
+
+            <button
+                id="audio-toggle"
+                class="audio-button"
+                aria-label="Activar o desactivar música"
+                title="Activar o desactivar música"
+            >
+                <span id="audio-icon">♫</span>
+            </button>
+
+            <div class="volume-container">
+
+                <input
+                    type="range"
+                    id="volume-control"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                    value="0.35"
+                    aria-label="Volumen de música"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- Audio ambiental -->
+        <audio
+            id="background-audio"
+            src="./img/audio-ambiente.mp3"
+            loop
+            preload="none"
+        ></audio>
+
+
+        <!-- Mensaje para dispositivos sin W    XebGL -->
+        <div id="webgl-error" class="webgl-error hidden">
+
+            <div class="webgl-error-content">
+
+                <h2>Este jardín necesita un navegador compatible</h2>
+
+                <p>
+                    Intenta abrir esta experiencia utilizando una versión
+                    actualizada de Chrome, Safari, Firefox o Edge.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================
+         JAVASCRIPT PRINCIPAL
+    =================================== -->
+
+    <script type="module" src="./js/js.js"></script>
+
+</body>
+</html>

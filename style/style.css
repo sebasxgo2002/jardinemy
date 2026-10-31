@@ -1,0 +1,1131 @@
+/* =====================================================
+   JARDÍN INFINITO - REGALO DE CUMPLEAÑOS PARA EMY
+   Archivo: style/style.css
+===================================================== */
+
+
+/* =====================================================
+   1. VARIABLES Y CONFIGURACIÓN GENERAL
+===================================================== */
+
+:root {
+    --color-cream: #fff4e9;
+    --color-pink: #f7c4cb;
+    --color-gold: #e8c58b;
+    --color-dark: #251c27;
+
+    --font-title: 'Cormorant Garamond', serif;
+    --font-body: 'Montserrat', sans-serif;
+
+    --transition-slow: 1.2s ease;
+    --transition-normal: 0.7s ease;
+
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--color-dark);
+    font-family: var(--font-body);
+    color: var(--color-cream);
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* =====================================================
+   2. CONTENEDOR PRINCIPAL
+===================================================== */
+
+#experience {
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(180deg,
+            #e99a80 0%,
+            #a76d83 45%,
+            #33283c 100%);
+
+    isolation: isolate;
+}
+
+
+/* =====================================================
+   3. ESCENARIO 3D
+===================================================== */
+
+#garden-container {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+
+    overflow: hidden;
+}
+
+#garden-container canvas {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    outline: none;
+}
+
+
+/* =====================================================
+   4. CAPAS CINEMATOGRÁFICAS
+===================================================== */
+
+.scene-overlay {
+    position: absolute;
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(180deg,
+            rgba(24, 15, 29, 0.12) 0%,
+            transparent 25%,
+            transparent 60%,
+            rgba(24, 15, 29, 0.24) 100%);
+}
+
+.scene-vignette {
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(ellipse at center,
+            transparent 45%,
+            rgba(20, 12, 23, 0.22) 100%);
+}
+
+
+/* =====================================================
+   5. VISIBILIDAD Y TRANSICIONES GENERALES
+===================================================== */
+
+.hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.loading-screen,
+.welcome-screen,
+.message-screen,
+.final-screen {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    padding:
+        calc(24px + var(--safe-top)) 24px calc(24px + var(--safe-bottom));
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+
+    z-index: 5;
+}
+
+.welcome-screen,
+.message-screen,
+.final-screen {
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   6. PANTALLA DE CARGA
+===================================================== */
+
+.loading-screen {
+    z-index: 20;
+
+    background:
+        radial-gradient(circle at 50% 45%,
+            rgba(122, 73, 91, 0.92),
+            rgba(32, 22, 35, 0.98));
+}
+
+.loading-content {
+    width: 100%;
+    max-width: 430px;
+
+    text-align: center;
+
+    animation: loadingAppear 1.2s ease both;
+}
+
+.loading-flower {
+    font-size: 64px;
+
+    color: var(--color-pink);
+
+    margin-bottom: 24px;
+
+    animation: flowerRotate 12s linear infinite;
+}
+
+.loading-content h1 {
+    font-family: var(--font-title);
+
+    font-size: clamp(30px, 5vw, 43px);
+
+    font-weight: 500;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+}
+
+.loading-content p {
+    font-size: 12px;
+
+    font-weight: 300;
+
+    letter-spacing: 1px;
+
+    line-height: 1.8;
+
+    color: rgba(255, 244, 233, 0.75);
+
+    margin-bottom: 30px;
+}
+
+.progress-container {
+    width: 100%;
+    height: 3px;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.17);
+
+    border-radius: 10px;
+
+    margin-bottom: 14px;
+}
+
+#loading-progress {
+    width: 0%;
+    height: 100%;
+
+    background:
+        linear-gradient(90deg,
+            #e9b4bd,
+            #f8dfb0);
+
+    border-radius: inherit;
+
+    transition: width 0.3s ease;
+}
+
+#loading-percentage {
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: rgba(255, 244, 233, 0.8);
+}
+
+
+/* =====================================================
+   7. PANTALLA DE BIENVENIDA
+===================================================== */
+
+.welcome-content {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 30px;
+
+    width: 100%;
+
+    text-align: center;
+
+    animation: welcomeAppear 2s ease both;
+}
+
+.welcome-subtitle {
+    font-family: var(--font-title);
+
+    font-size: clamp(20px, 3vw, 27px);
+
+    font-weight: 400;
+
+    letter-spacing: 2px;
+
+    color: rgba(255, 244, 233, 0.95);
+
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =====================================================
+   8. BOTÓN GLASSMORPHISM
+===================================================== */
+
+.glass-button {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    min-width: 180px;
+
+    padding: 16px 32px;
+
+    border: 1px solid rgba(255, 255, 255, 0.48);
+
+    border-radius: 50px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    color: #fff8f0;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 32px rgba(31, 15, 30, 0.15),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+    transition:
+        transform 0.4s ease,
+        background 0.4s ease,
+        box-shadow 0.4s ease;
+
+    animation: buttonFloat 4s ease-in-out infinite;
+}
+
+.glass-button:hover {
+    background: rgba(255, 255, 255, 0.24);
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 40px rgba(31, 15, 30, 0.25),
+        0 0 25px rgba(255, 224, 200, 0.16);
+}
+
+.glass-button:active {
+    transform: scale(0.96);
+}
+
+.glass-button:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 5px;
+}
+
+.button-arrow {
+    font-size: 17px;
+
+    color: var(--color-gold);
+
+    transition: transform 0.4s ease;
+}
+
+.glass-button:hover .button-arrow {
+    transform: rotate(90deg);
+}
+
+
+/* =====================================================
+   9. PRESENTACIÓN DE MENSAJES
+===================================================== */
+
+.message-screen {
+    z-index: 6;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        calc(35px + var(--safe-top)) 20px calc(35px + var(--safe-bottom));
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: clamp(20px, 4vh, 35px);
+
+    width: 100%;
+    max-width: 850px;
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+.message-text-container {
+    width: 100%;
+    max-width: 760px;
+
+    padding: 0 10px;
+}
+
+.message-text {
+    font-family: var(--font-title);
+
+    font-size: clamp(28px, 4vw, 45px);
+
+    font-weight: 500;
+
+    line-height: 1.35;
+
+    letter-spacing: 0.3px;
+
+    color: #fff9f1;
+
+    text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.45),
+        0 5px 25px rgba(0, 0, 0, 0.35);
+
+    overflow-wrap: break-word;
+
+    opacity: 0;
+    transform: translateY(15px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
+}
+
+
+/* =====================================================
+   10. FOTOGRAFÍAS DE LOS MENSAJES
+===================================================== */
+
+.photo-container {
+    position: relative;
+
+    width: clamp(190px, 29vw, 310px);
+
+    aspect-ratio: 1 / 1;
+
+    padding: 7px;
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+
+    border: 1px solid rgba(255, 255, 255, 0.42);
+
+    box-shadow:
+        0 15px 50px rgba(20, 10, 20, 0.32),
+        0 0 30px rgba(255, 216, 203, 0.14);
+
+    overflow: hidden;
+}
+
+.photo-container::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(145deg,
+            rgba(255, 255, 255, 0.3),
+            transparent 40%,
+            rgba(255, 222, 199, 0.12));
+
+    z-index: 2;
+}
+
+.message-photo {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    opacity: 0;
+
+    transform: scale(1.035);
+
+    filter: saturate(0.94);
+
+    transition:
+        opacity 1.2s ease,
+        transform 1.8s ease,
+        filter 1s ease;
+}
+
+.message-photo.loaded {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+
+/* =====================================================
+   11. ESCENA FINAL
+===================================================== */
+
+.final-screen {
+    z-index: 8;
+
+    padding:
+        calc(25px + var(--safe-top)) 20px calc(25px + var(--safe-bottom));
+
+    overflow-y: auto;
+}
+
+.final-content {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+
+    width: 100%;
+    max-width: 650px;
+
+    text-align: center;
+
+    animation: finalAppear 2s ease both;
+}
+
+.final-decoration {
+    font-size: 25px;
+
+    letter-spacing: 12px;
+
+    color: #f6d6ad;
+
+    animation: decorationGlow 4s ease-in-out infinite;
+}
+
+.final-content h1 {
+    font-family: var(--font-title);
+
+    font-size: clamp(39px, 7vw, 70px);
+
+    font-weight: 500;
+
+    line-height: 1.15;
+
+    color: #fff6ec;
+
+    text-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.35),
+        0 0 35px rgba(255, 216, 185, 0.2);
+}
+
+.final-subtitle {
+    font-family: var(--font-body);
+
+    font-size: clamp(10px, 2vw, 13px);
+
+    font-weight: 300;
+
+    line-height: 1.8;
+
+    letter-spacing: 1px;
+
+    color: rgba(255, 244, 233, 0.85);
+
+    max-width: 420px;
+}
+
+.final-photo-container {
+    position: relative;
+
+    width: clamp(200px, 34vw, 330px);
+
+    aspect-ratio: 1 / 1;
+
+    padding: 8px;
+
+    margin-top: 15px;
+
+    border-radius: 22px;
+
+    background: rgba(255, 255, 255, 0.13);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.55);
+
+    box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.3),
+        0 0 45px rgba(255, 217, 183, 0.2);
+}
+
+.final-photo {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    opacity: 0;
+
+    transform: scale(0.94);
+
+    transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
+}
+
+.final-photo.loaded {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+
+/* =====================================================
+   12. PÉTALOS DECORATIVOS
+===================================================== */
+
+.final-petals {
+    position: absolute;
+    inset: -100px;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   13. CONTROLES DE AUDIO
+===================================================== */
+
+.audio-controls {
+    position: absolute;
+
+    z-index: 12;
+
+    right: 25px;
+
+    top: calc(25px + var(--safe-top));
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 8px 12px;
+
+    border-radius: 50px;
+
+    background: rgba(35, 25, 38, 0.3);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    transition: background 0.3s ease;
+}
+
+.audio-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    color: white;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+.audio-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+
+    transform: scale(1.08);
+}
+
+.volume-container {
+    display: flex;
+    align-items: center;
+
+    width: 65px;
+}
+
+#volume-control {
+    width: 100%;
+
+    height: 3px;
+
+    accent-color: #f5d4b3;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   14. ERROR DE WEBGL
+===================================================== */
+
+.webgl-error {
+    position: absolute;
+    inset: 0;
+
+    z-index: 30;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background: #281d2c;
+
+    text-align: center;
+}
+
+.webgl-error-content {
+    max-width: 450px;
+}
+
+.webgl-error h2 {
+    font-family: var(--font-title);
+
+    font-size: 34px;
+
+    margin-bottom: 15px;
+}
+
+.webgl-error p {
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* =====================================================
+   15. ANIMACIONES
+===================================================== */
+
+@keyframes loadingAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes flowerRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes welcomeAppear {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes buttonFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes finalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes decorationGlow {
+
+    0%,
+    100% {
+        opacity: 0.65;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+
+/* =====================================================
+   16. TABLETS
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .message-text {
+        font-size: clamp(27px, 5vw, 39px);
+    }
+
+    .photo-container {
+        width: clamp(190px, 38vw, 280px);
+    }
+
+    .final-content h1 {
+        font-size: clamp(40px, 7vw, 58px);
+    }
+
+}
+
+
+/* =====================================================
+   17. CELULARES
+===================================================== */
+
+@media (max-width: 600px) {
+
+    #experience {
+        min-height: 100%;
+    }
+
+    .welcome-content {
+        gap: 24px;
+        padding: 0 12px;
+    }
+
+    .welcome-subtitle {
+        font-size: 21px;
+        letter-spacing: 1px;
+    }
+
+    .glass-button {
+        min-width: 165px;
+
+        padding: 15px 25px;
+
+        font-size: 11px;
+    }
+
+    .message-screen {
+        padding:
+            calc(35px + var(--safe-top)) 18px calc(35px + var(--safe-bottom));
+    }
+
+    .message-content {
+        gap: 24px;
+    }
+
+    .message-text-container {
+        padding: 0 5px;
+    }
+
+    .message-text {
+        font-size: clamp(27px, 7vw, 35px);
+
+        line-height: 1.38;
+    }
+
+    .photo-container {
+        width: min(68vw, 265px);
+
+        padding: 6px;
+
+        border-radius: 15px;
+    }
+
+    .photo-container img {
+        border-radius: 10px;
+    }
+
+    .audio-controls {
+        top: calc(15px + var(--safe-top));
+        right: 15px;
+
+        padding: 6px 9px;
+
+        gap: 8px;
+    }
+
+    .audio-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .volume-container {
+        width: 50px;
+    }
+
+    .final-screen {
+        padding:
+            calc(25px + var(--safe-top)) 16px calc(25px + var(--safe-bottom));
+    }
+
+    .final-content {
+        gap: 13px;
+    }
+
+    .final-content h1 {
+        font-size: clamp(39px, 10vw, 52px);
+    }
+
+    .final-subtitle {
+        max-width: 300px;
+        font-size: 11px;
+    }
+
+    .final-photo-container {
+        width: min(70vw, 280px);
+    }
+
+}
+
+
+/* =====================================================
+   18. CELULARES PEQUEÑOS
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .message-text {
+        font-size: 25px;
+    }
+
+    .photo-container {
+        width: 62vw;
+    }
+
+    .final-content h1 {
+        font-size: 37px;
+    }
+
+    .loading-content h1 {
+        font-size: 29px;
+    }
+
+}
+
+
+/* =====================================================
+   19. ORIENTACIÓN HORIZONTAL
+===================================================== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .message-screen {
+        padding: 12px 30px;
+    }
+
+    .message-content {
+        flex-direction: row;
+
+        gap: 30px;
+
+        max-width: 900px;
+    }
+
+    .message-text-container {
+        flex: 1;
+    }
+
+    .message-text {
+        font-size: clamp(22px, 4vh, 34px);
+    }
+
+    .photo-container {
+        width: min(38vh, 220px);
+
+        flex-shrink: 0;
+    }
+
+    .final-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        gap: 12px 25px;
+    }
+
+    .final-content h1,
+    .final-decoration,
+    .final-subtitle {
+        width: 100%;
+    }
+
+    .final-photo-container {
+        width: min(40vh, 200px);
+
+        margin-top: 0;
+    }
+
+}
+
+
+/* =====================================================
+   20. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+/* CORRECCIÓN DE INTERACCIÓN DEL BOTÓN */
+
+.scene-overlay,
+.scene-vignette {
+    pointer-events: none;
+}
+
+#welcome-screen {
+    pointer-events: auto;
+    z-index: 20;
+}
+
+#welcome-screen .welcome-content {
+    pointer-events: auto;
+}
+
+#start-button {
+    pointer-events: auto;
+    position: relative;
+    z-index: 30;
+    cursor: pointer;
+}
+
+.message-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =====================================================
+   FIN DEL ARCHIVO
+===================================================== */
